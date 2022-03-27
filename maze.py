@@ -1,19 +1,8 @@
 import random
-import argparse
 import json
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
-
-"""
-Происходит обработка аргументов, переданных в модуль.
-"""
-
-parser = argparse.ArgumentParser()
-parser.add_argument('mode', type=str)
-parser.add_argument('height', type=int)
-parser.add_argument('width', type=int)
-args = parser.parse_args()
 
 EmptyCell = 0
 FilledCell = 1
@@ -323,10 +312,10 @@ def generate_maze():
     """
     afterplay_unbinding()
     canvas.delete("all")
-    root.maze = Maze(args.height, args.width)
-    if args.mode == 'Prim':
+    root.maze = Maze(root.args.height, root.args.width)
+    if root.args.mode == 'Prim':
         prim(root.maze)
-    elif args.mode == 'Recursive':
+    elif root.args.mode == 'Recursive':
         recursive_backtracker(root.maze)
     copy_maze_for_save()
     path_start = Button(buttons_frame, name="path", text="Calculate Path", padx=20, command=lambda: path())
@@ -364,6 +353,9 @@ def save_file():
         text_file.write(str(root.original_cells))
 
 
+def init_args(args):
+    root.args = args
+
 """
 Создаются необходимые элементы графического интерфейса.
 """
@@ -371,7 +363,6 @@ def save_file():
 root = Tk()
 root.title("Maze Generator")
 root.resizable(False, False)
-root.maze = Maze(args.height, args.width)
 
 canvas_width = 500
 canvas_height = 500
@@ -387,5 +378,3 @@ gen_start.grid(row=0, column=0)
 
 open_button = Button(buttons_frame, text="Open from file", padx=20, command=open_file)
 open_button.grid(row=0, column=4)
-
-canvas.mainloop()

@@ -1,5 +1,0 @@
-Run using the console, passing parameters in the format: python3 maze.py <mode> <height> <width>
-
-<mode> must be exactly one of the following: Recursive, Prim
-
-Recommended <height> and <width> are 16 and 16
